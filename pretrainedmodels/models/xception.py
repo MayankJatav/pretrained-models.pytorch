@@ -213,7 +213,7 @@ class Xception(nn.Module):
         return x
 
 
-def xception(num_classes=1000, pretrained='imagenet'):
+def xception(num_classes=1000, pretrained='imagenet', verify_ssl=True):
     model = Xception(num_classes=num_classes)
     if pretrained:
         settings = pretrained_settings['xception'][pretrained]
@@ -221,7 +221,7 @@ def xception(num_classes=1000, pretrained='imagenet'):
             "num_classes should be {}, but is {}".format(settings['num_classes'], num_classes)
 
         model = Xception(num_classes=num_classes)
-        model.load_state_dict(model_zoo.load_url(settings['url']))
+        model.load_state_dict(model_zoo.load_url(settings['url']), verify_ssl=verify_ssl)
 
         model.input_space = settings['input_space']
         model.input_size = settings['input_size']
